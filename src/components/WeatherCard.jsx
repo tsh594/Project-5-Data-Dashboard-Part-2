@@ -1,170 +1,128 @@
-import { DateTime } from 'luxon';
-import { WiDaySunny, WiRain, WiSnow, WiCloudy, WiThermometer, 
-         WiHumidity, WiStrongWind, WiSunrise, WiSunset } from 'react-icons/wi';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
+import { WiDaySunny, WiRain, WiSnow, WiCloudy, WiThermometer, WiHumidity, WiStrongWind, WiSunrise, WiSunset } from 'react-icons/wi';
 
 const WeatherCard = ({ weather, onClick }) => {
-  if (!weather || !weather.sys || !weather.weather) {
-    return (
-      <div className="weather-card error">
-        <p>Weather data unavailable</p>
-      </div>
-    );
-  }
+  const [cityImage, setCityImage] = useState('');
+  const PEXELS_KEY = import.meta.env.VITE_APP_PEXELS_KEY;
+  const UNSPLASH_KEY = import.meta.env.VITE_APP_UNSPLASH_KEY;
 
-  // Get weather icon based on conditions
-  const getWeatherIcon = (main) => {
-    const iconSize = 80;
-    const iconMap = {
-      clear: <WiDaySunny size={iconSize} className="sunny" />,
-      rain: <WiRain size={iconSize} className="rain" />,
-      snow: <WiSnow size={iconSize} className="snow" />,
-      clouds: <WiCloudy size={iconSize} className="cloudy" />,
-      thunderstorm: <WiRain size={iconSize} className="thunder" />,
-      drizzle: <WiRain size={iconSize} className="drizzle" />,
-      mist: <WiCloudy size={iconSize} className="mist" />,
+  useEffect(() => {
+    const fetchCityImage = async () => {
+      try {
+        // Try Pexels first
+        const pexelsRes = await fetch(
+          `https://api.pexels.com/v1/search?query=${weather.name}+city&per_page=1`,
+          { headers: { Authorization: PEXELS_KEY } }
+        );
+        const pexelsData = await pexelsRes.json();
+        if (pexelsData.photos?.length > 0) {
+          setCityImage(pexelsData.photos[0].src.large);
+          return;
+        }
+
+        // Fallback to Unsplash
+        const unsplashRes = await fetch(
+          `https://api.unsplash.com/search/photos?query=${weather.name}&client_id=${UNSPLASH_KEY}`
+        );
+        const unsplashData = await unsplashRes.json();
+        if (unsplashData.results?.length > 0) {
+          setCityImage(unsplashData.results[0].urls.regular);
+          return;
+        }
+
+        // Ultimate fallback to generic city image
+        setCityImage('/default-city.jpg');
+      } catch (err) {
+        console.error('Image fetch error:', err);
+        setCityImage('/default-city.jpg');
+      }
     };
-    return iconMap[main.toLowerCase()] || iconMap.clear;
-  };
 
-  // Format time with timezone offset
-  const formatTime = (timestamp, timezoneOffset) => {
-    try {
-      return DateTime.fromSeconds(timestamp, { zone: 'utc' })
-        .plus({ seconds: timezoneOffset })
-        .toLocaleString(DateTime.TIME_SIMPLE);
-    } catch (error) {
-      console.error('Time formatting error:', error);
-      return '--:--';
-    }
-  };
+    fetchCityImage();
+  }, [weather.name]);
 
-  // Calculate daylight duration between sunrise and sunset
-  const calculateDaylight = (sunrise, sunset, timezoneOffset) => {
-    try {
-      const start = DateTime.fromSeconds(sunrise, { zone: 'utc' })
-        .plus({ seconds: timezoneOffset });
-      const end = DateTime.fromSeconds(sunset, { zone: 'utc' })
-        .plus({ seconds: timezoneOffset });
-      
-      const duration = end.diff(start, ['hours', 'minutes']);
-      return `${duration.hours}h ${Math.round(duration.minutes)}m`;
-    } catch (error) {
-      console.error('Daylight calculation error:', error);
-      return '--:--';
-    }
-  };
-
-  // Destructure weather data with fallbacks
-  const {
-    name = 'Unknown',
-    sys: { country = '', sunrise = 0, sunset = 0 } = {},
-    main: { temp = 0, feels_like = 0, humidity = 0 } = {},
-    wind: { speed = 0 } = {},
-    weather: [primaryWeather = { main: 'Clear' }] = {},
-    coord: { lat, lon } = {},
-    timezone = 0 // Default to UTC if not provided
-  } = weather;
-
-  const windSpeed = typeof speed === 'number' ? speed : 0;
-
-  return (
+   const getWeatherIcon = (main) => {
+     const iconSize = 80;
+     switch(main.toLowerCase()) {
+       case 'clear': 
+         return <WiDaySunny size={iconSize} className="weather-icon-sunny" />;
+       case 'rain': 
+         return <WiRain size={iconSize} className="weather-icon-rain" />;
+       case 'snow': 
+         return <WiSnow size={iconSize} className="weather-icon-snow" />;
+       case 'clouds': 
+         return <WiCloudy size={iconSize} className="weather-icon-cloudy" />;
+       default: 
+         return <WiDaySunny size={iconSize} className="weather-icon-sunny" />;
+     }
+   };
+ 
+   return (
+  <div 
+      className="weather-card"
+      onClick={onClick}
+      style={{ 
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), url(${cityImage || '/default-city.jpg'})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
     <div className="weather-card" onClick={onClick}>
-      <div className="location-info">
-        <h2>{name}</h2>
-        <div className="location-details">
-          <span>{country}</span>
-          <span>Lat: {lat?.toFixed(2) || '--'}</span>
-          <span>Lon: {lon?.toFixed(2) || '--'}</span>
-        </div>
+       <div className="location-info">
+         <h1 className="city-name">{weather.name}</h1>
+         <div className="location-details">
+           <span>{weather.sys.country}</span>
+           <span>Lat: {weather.coord.lat.toFixed(2)}</span>
+           <span>Lon: {weather.coord.lon.toFixed(2)}</span>
+         </div>
+       </div>
+ 
+       <div className="current-weather">
+         <div className="weather-icon">
+           {getWeatherIcon(weather.weather[0].main)}
+         </div>
+         <div className="temperature">
+           {Math.round(weather.main.temp)}°C
+           <div className="feels-like">
+             <WiThermometer className="thermometer-icon" /> 
+             Feels like {Math.round(weather.main.feels_like)}°C
+           </div>
+         </div>
+       </div>
+ 
+       <div className="weather-details">
+         <div className="detail-item">
+           <WiHumidity className="humidity-icon" />
+           <div className="detail-text">
+             <span>Humidity</span>
+             <span>{weather.main.humidity}%</span>
+           </div>
+         </div>
+         <div className="detail-item">
+           <WiStrongWind className="wind-icon" />
+           <div className="detail-text">
+             <span>Wind</span>
+             <span>{weather.wind.speed} m/s</span>
+           </div>
+         </div>
+         <div className="detail-item">
+           <WiSunrise className="sunrise-icon" />
+           <div className="detail-text">
+             <span>Sunrise</span>
+             <span>{new Date(weather.sys.sunrise * 1000).toLocaleTimeString()}</span>
+           </div>
+         </div>
+         <div className="detail-item">
+           <WiSunset className="sunset-icon" />
+           <div className="detail-text">
+             <span>Sunset</span>
+             <span>{new Date(weather.sys.sunset * 1000).toLocaleTimeString()}</span>
+           </div>
+         </div>
+       </div>
+     </div>
       </div>
-
-      <div className="weather-display">
-        <div className="weather-icon">
-          {getWeatherIcon(primaryWeather.main)}
-        </div>
-        <div className="temperature-data">
-          <span className="temperature">{Math.round(temp)}°C</span>
-          <div className="feels-like">
-            <WiThermometer className="thermometer-icon" />
-            <span>Feels like {Math.round(feels_like)}°C</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="weather-details">
-        <div className="detail-item">
-          <WiHumidity className="detail-icon" />
-          <div className="detail-text">
-            <span>Humidity</span>
-            <span>{humidity}%</span>
-          </div>
-        </div>
-        
-        <div className="detail-item">
-          <WiStrongWind className="detail-icon" />
-          <div className="detail-text">
-            <span>Wind</span>
-            <span>{windSpeed.toFixed(1)} m/s</span>
-          </div>
-        </div>
-        
-        <div className="detail-item">
-          <WiSunrise className="detail-icon" />
-          <div className="detail-text">
-            <span>Sunrise</span>
-            <span>{formatTime(sunrise, timezone)}</span>
-          </div>
-        </div>
-        
-        <div className="detail-item">
-          <WiSunset className="detail-icon" />
-          <div className="detail-text">
-            <span>Sunset</span>
-            <span>{formatTime(sunset, timezone)}</span>
-          </div>
-        </div>
-
-        <div className="detail-item">
-          <WiSunrise className="daylight-icon" />
-          <div className="detail-text">
-            <span>Daylight</span>
-            <span>{calculateDaylight(sunrise, sunset, timezone)}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-WeatherCard.propTypes = {
-  weather: PropTypes.shape({
-    name: PropTypes.string,
-    sys: PropTypes.shape({
-      country: PropTypes.string,
-      sunrise: PropTypes.number,
-      sunset: PropTypes.number,
-    }),
-    coord: PropTypes.shape({
-      lat: PropTypes.number,
-      lon: PropTypes.number,
-    }),
-    main: PropTypes.shape({
-      temp: PropTypes.number,
-      feels_like: PropTypes.number,
-      humidity: PropTypes.number,
-    }),
-    wind: PropTypes.shape({
-      speed: PropTypes.number,
-    }),
-    weather: PropTypes.arrayOf(
-      PropTypes.shape({
-        main: PropTypes.string,
-      })
-    ),
-    timezone: PropTypes.number,
-  }).isRequired,
-  onClick: PropTypes.func,
-};
-
-export default WeatherCard;
+   );
+ };
+ 
+ export default WeatherCard;

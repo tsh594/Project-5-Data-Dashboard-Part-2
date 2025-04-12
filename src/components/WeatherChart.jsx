@@ -79,43 +79,50 @@ const WeatherChart = ({ weatherData, detailedView = false }) => {
         }
       : null;
 
-  const chartOptions = {
+    const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
+        legend: {
         position: 'top',
-        labels: {
-          font: {
-            size: 12,
-          },
         },
-      },
-      title: {
+        title: {
         display: true,
         text: detailedView ? '24 Hour Temperature Forecast' : 'Weather Data',
         font: {
-          size: 16,
+            size: 16,
         },
-      },
+        color: '#ffffff'
+        },
+        tooltip: {
+        mode: 'index',
+        intersect: false,
+        }
     },
     scales: {
-      x: {
-        ticks: {
-          font: {
-            size: 10,
-          },
+        x: {
+        grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
         },
-      },
-      y: {
         ticks: {
-          font: {
-            size: 10,
-          },
+            color: '#ffffff'
+        }
         },
-      },
+        y: {
+        grid: {
+            color: 'rgba(255, 255, 255, 0.1)'
+        },
+        ticks: {
+            color: '#ffffff'
+        }
+        }
     },
-  };
+    elements: {
+        line: {
+        tension: 0.4
+        }
+    }
+    };
 
   return (
     <div className="charts-container">

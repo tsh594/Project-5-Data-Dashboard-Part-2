@@ -13,19 +13,32 @@ const Navigation = () => {
         <li>
           <NavLink 
             to="/" 
-            className={({ isActive }) => isActive ? 'active-link' : ''}
+            end
+            className={({ isActive }) => 
+              isActive ? 'active-link' : ''
+            }
             title="Go to the Dashboard"
           >
             Dashboard
           </NavLink>
         </li>
         <li>
-          <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer">
+          <a 
+            href="https://openweathermap.org/api" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="external-link"
+          >
             API Docs
           </a>
         </li>
         <li>
-          <a href="https://github.com/tsh594/Project-5-Data-Dashboard-Part-2.git" target="_blank" rel="noopener noreferrer">
+          <a 
+            href="https://github.com/tsh594/Project-5-Data-Dashboard-Part-2.git" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="external-link"
+          >
             GitHub
           </a>
         </li>
