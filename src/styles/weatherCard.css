@@ -1,0 +1,125 @@
+.weather-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.weather-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.weather-description {
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+  color: #FFFFFF;
+}
+
+.daylight-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  color: #FFA500;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.detail-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.detail-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-text span:first-child {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  color: #98FB98;
+}
+
+.detail-text span:last-child {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  color: #FFD700;
+  margin-bottom: 8px;
+}
+
+.temperature-data {
+  text-align: right;
+}
+
+.temperature {
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: block;
+  line-height: 1;
+  background: linear-gradient(to bottom, white, #98FB98);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.feels-like {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #87CEEB;
+}
+
+.error {
+  color: #FF0000;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.api-fallback-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 165, 0, 0.8);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+@media (max-width: 480px) {
+  .weather-card {
+    padding: 12px;
+  }
+  
+  .temperature {
+    font-size: 2rem;
+  }
+  
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+  
+  .detail-item {
+    padding: 6px 10px;
+  }
+}

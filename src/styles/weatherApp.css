@@ -1,0 +1,132 @@
+.weather-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 20px;
+  }
+  
+  .app-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .app-header h1 {
+    margin: 0 0 20px 0;
+    font-size: 2.5rem;
+  }
+  
+  .search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-form input {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    font-size: 1rem;
+  }
+  
+  .search-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+  }
+  
+  .search-form button:hover {
+    background: #45a049;
+  }
+  
+  .unit-toggle {
+    background: #2196F3 !important;
+  }
+  
+  .unit-toggle:hover {
+    background: #0b7dda !important;
+  }
+  
+  .app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .weather-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .loading, .error, .no-data {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .loading {
+    color: #87CEEB;
+  }
+  
+  .error {
+    color: #ff6b6b;
+  }
+  
+  .no-data {
+    color: #FFD700;
+  }
+  
+  .app-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  
+  .api-status {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: #98FB98;
+  }
+  
+  .api-status.warning {
+    color: #FFA500;
+  }
+  
+  .api-status.error {
+    color: #FF4500;
+  }
+  
+  @media (max-width: 768px) {
+    .search-form {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .search-form input {
+      width: 100%;
+    }
+    
+    .app-header h1 {
+      font-size: 2rem;
+    }
+  }
