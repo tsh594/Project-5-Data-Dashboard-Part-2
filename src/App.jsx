@@ -151,8 +151,6 @@ const App = () => {
               <DetailView 
                 weatherData={weatherData}
                 fetchBackgroundImage={fetchBackgroundImage}
-                saveScrollPosition={saveScrollPosition}
-                restoreScrollPosition={restoreScrollPosition}
               />
             } />
           </Routes>

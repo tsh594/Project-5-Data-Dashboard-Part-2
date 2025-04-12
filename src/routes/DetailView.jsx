@@ -10,8 +10,10 @@ const DetailView = ({ weatherData, fetchBackgroundImage }) => {
   const [backgroundImage, setBackgroundImage] = useState(null);
 
   useEffect(() => {
-    const foundLocation = weatherData.find((item) => item.id === parseInt(id));
-    setLocation(foundLocation);
+    if (weatherData.length > 0) {
+      const foundLocation = weatherData.find((item) => item.id === parseFloat(id));
+      setLocation(foundLocation);
+    }
   }, [id, weatherData]);
 
   useEffect(() => {
@@ -22,10 +24,19 @@ const DetailView = ({ weatherData, fetchBackgroundImage }) => {
     }
   }, [location, fetchBackgroundImage]);
 
+  if (!weatherData.length) {
+    return (
+      <div className="container">
+        <div className="loading-banner">Loading weather data...</div>
+        <button onClick={() => navigate('/')}>Back to Dashboard</button>
+      </div>
+    );
+  }
+
   if (!location) {
     return (
       <div className="container">
-        <div className="loading-banner">Loading location details...</div>
+        <div className="error-banner">Location not found.</div>
         <button onClick={() => navigate('/')}>Back to Dashboard</button>
       </div>
     );
@@ -48,7 +59,6 @@ const DetailView = ({ weatherData, fetchBackgroundImage }) => {
       <p>Wind Speed: {location.wind.speed} m/s</p>
       <p>Weather: {location.weather[0].description}</p>
 
-      {/* Pass the location's forecast data to WeatherChart */}
       <WeatherChart weatherData={[location]} detailedView />
 
       <button onClick={() => navigate('/')}>Back to Dashboard</button>

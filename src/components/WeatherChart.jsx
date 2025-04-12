@@ -62,19 +62,22 @@ const WeatherChart = ({ weatherData, detailedView = false }) => {
   };
 
   // Detailed temperature forecast for single location
-  const detailedTempData = weatherData.length === 1 ? {
-    labels: getForecastData(weatherData[0]).map((_, i) => `${i * 3}h`),
-    datasets: [
-      {
-        label: 'Temperature (°C)',
-        data: getForecastData(weatherData[0]).map(hour => hour.main.temp),
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        tension: 0.1,
-        fill: true
-      }
-    ]
-  } : null;
+  const detailedTempData =
+    weatherData.length === 1 && weatherData[0].forecast
+      ? {
+          labels: weatherData[0].forecast.slice(0, 8).map((_, i) => `${i * 3}h`),
+          datasets: [
+            {
+              label: 'Temperature (°C)',
+              data: weatherData[0].forecast.slice(0, 8).map((hour) => hour.main.temp),
+              borderColor: 'rgba(255, 99, 132, 1)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              tension: 0.1,
+              fill: true,
+            },
+          ],
+        }
+      : null;
 
   const chartOptions = {
     responsive: true,

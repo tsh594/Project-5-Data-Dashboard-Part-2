@@ -1,8 +1,10 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   return (
-    <nav className="sidebar">
+    <nav className="navigation">
+      <h1>Weather App</h1>
       <div className="sidebar-header">
         <h2>Global Weather</h2>
         <p>Explore weather around the world</p>
