@@ -78,6 +78,7 @@ Here's a walkthrough of implemented user stories:
 GIF created with ...  
 (1). Game Bar
 (2). Cloud Convertor (https://cloudconvert.com/mp4-to-gif)
+(3). https://www.xconvert.com/downloads (to compress the gif file)
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
