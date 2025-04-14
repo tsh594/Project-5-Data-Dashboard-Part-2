@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { WiDaySunny, WiRain, WiSnow, WiCloudy, WiThermometer, WiHumidity, WiStrongWind, WiSunrise, WiSunset } from 'react-icons/wi';
 
 const WeatherCard = ({ weather, onClick }) => {
+  const getIconUrl = (code) => {
+    const validCode = code || '01d'; // Fallback to clear sky icon
+    return `https://openweathermap.org/img/wn/${validCode}@2x.png`;
+  };
   const [cityImage, setCityImage] = useState('');
   const PEXELS_KEY = import.meta.env.VITE_APP_PEXELS_KEY;
   const UNSPLASH_KEY = import.meta.env.VITE_APP_UNSPLASH_KEY;
@@ -121,7 +125,22 @@ const WeatherCard = ({ weather, onClick }) => {
          </div>
        </div>
      </div>
+
+     <div className="weather-card" onClick={onClick}>
+      <div className="weather-icon">
+        <img
+          src={getIconUrl(weather?.weather?.[0]?.icon)}
+          alt={weather?.weather?.[0]?.description || 'Weather icon'}
+          className="weather-icon-img"
+          onError={(e) => {
+            e.target.src = getIconUrl('01d'); // Fallback on image error
+          }}
+        />
       </div>
+</div>
+      </div>
+
+
    );
  };
  

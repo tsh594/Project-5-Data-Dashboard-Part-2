@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import WeatherChart from '../components/WeatherChart';
+import TemperatureLineChart from '../components/TemperatureLineChart'; // Add this import
 import { WiDaySunny, WiRain, WiSnow, WiCloudy, WiThermometer, 
          WiHumidity, WiStrongWind, WiSunrise, WiSunset } from 'react-icons/wi';
 import { DateTime } from 'luxon';
@@ -119,6 +120,13 @@ const DetailView = ({ weatherData, fetchBackgroundImage }) => {
             <span>Sunset: {formatTime(location.sys.sunset, location.timezone)}</span>
           </div>
         </div>
+
+        <div className="forecast-section">
+        <h2>Hourly Temperature Forecast</h2>
+        <TemperatureLineChart 
+          forecastData={location.hourly || []} 
+        />
+      </div>
 
         <div className="forecast-section">
           <h2>24-Hour Forecast</h2>

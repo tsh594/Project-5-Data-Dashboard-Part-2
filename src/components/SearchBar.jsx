@@ -13,11 +13,20 @@ const SearchBar = ({ searchQuery, setSearchQuery, loading }) => {
   ];
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target)) {
-        setSuggestions([]);
-      }
-    };
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (
+          suggestionsRef.current && 
+          !suggestionsRef.current.contains(event.target) &&
+          !event.target.closest('.search-container') // Check if click is outside entire search area
+        ) {
+          setSuggestions([]);
+        }
+      };
+    
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -87,6 +96,18 @@ const SearchBar = ({ searchQuery, setSearchQuery, loading }) => {
     setSuggestions([]);
   };
 
+  useEffect(() => {
+    const container = document.querySelector('.search-container');
+    if (container) {
+      container.style.overflow = 'hidden';
+      container.style.height = 'auto';
+      const form = container.querySelector('form');
+      if (form) {
+        form.style.overflow = 'hidden';
+      }
+    }
+  }, []);
+
   return (
     <div className="search-container">
       <form className="search-box" onSubmit={handleSearch}>
@@ -105,6 +126,12 @@ const SearchBar = ({ searchQuery, setSearchQuery, loading }) => {
           {loading ? 'Searching...' : 'Search'}
         </button>
       </form>
+
+      <div 
+        className="suggestions-dropdown" 
+        ref={suggestionsRef}
+        style={{ display: 'block', border: '2px solid red' }} // Temporary debug
+      ></div>
       
       {suggestions.length > 0 && (
         <div className="suggestions-dropdown" ref={suggestionsRef}>

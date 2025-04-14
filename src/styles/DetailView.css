@@ -1,181 +1,200 @@
-.detail-view {
-    min-height: 100vh;
-    width: 100%;
-    padding: 20px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .weather-content {
-    width: 100%;
-    max-width: 1000px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .location-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .location-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .current-weather {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .weather-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .weather-icon svg {
-    width: 80px;
-    height: 80px;
-  }
-  
-  .temperature-display {
-    text-align: center;
-  }
-  
-  .temperature {
-    font-size: 3rem;
-    font-weight: bold;
-    display: block;
-  }
-  
-  .feels-like {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1.1rem;
-    color: #87CEEB;
-  }
-  
-  .weather-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 10px;
-  }
-  
-  .stat-item svg {
-    font-size: 1.5rem;
-  }
-  
-  .forecast-section {
-    margin: 2rem 0;
-  }
-  
-  .forecast-section h2 {
-    margin-bottom: 1rem;
-    color: #FFD700;
-  }
-  
-  .daily-forecast {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 1rem;
-  }
-  
-  .day-card {
-    min-width: 120px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 10px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-  
-  .day-card h3 {
-    margin-bottom: 0.5rem;
-  }
-  
-  .weather-icon-small svg {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .temps {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  
-  .high {
-    font-weight: bold;
-    color: #FF4500;
-  }
-  
-  .low {
-    color: #87CEEB;
-  }
-  
-  .back-button {
-    margin-top: 2rem;
-    padding: 0.8rem 1.5rem;
-    background: #007aff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s;
-  }
-  
-  .back-button:hover {
-    background: #005bb5;
-  }
-  
-  @media (max-width: 768px) {
-    .current-weather {
-      flex-direction: column;
-    }
-    
-    .weather-content {
-      padding: 1.5rem;
-    }
-    
-    .location-header h1 {
-      font-size: 2rem;
-    }
-    
-    .temperature {
-      font-size: 2.5rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .weather-stats {
-      grid-template-columns: 1fr;
-    }
-    
-    .day-card {
-      min-width: 100px;
-    }
-  }
+/*DetailView.css*/
+.detailed-chart {
+  height: 400px !important;
+  min-height: 400px !important;
+  padding: 1rem;
+  background: rgba(46, 4, 89, 0.3);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.recharts-tooltip-wrapper {
+  z-index: 1000 !important;
+  background: rgba(30, 15, 60, 0.95) !important;
+  border: 1px solid #7F5AF0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+.recharts-legend-wrapper {
+  background: rgba(46, 4, 89, 0.7) !important;
+  border-radius: 8px !important;
+  padding: 8px !important;
+}
+
+/* Add this to your CSS file */
+.weather-stats {
+  color: #00e5ff; /* Bright cyan */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+
+
+
+.weather-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.weather-stat-item span:first-child {
+  color: #ffd700; /* Gold color for labels */
+  font-weight: 500;
+  min-width: 80px;
+}
+
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Add to DetailView.css */
+.city-header {
+  background: linear-gradient(135deg, rgba(157,112,255,0.15), rgba(255,107,107,0.1));
+  padding: 2rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.city-name {
+  color: #ffd700;
+  font-size: 2.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.weather-stats {
+  background: rgba(0,0,0,0.3);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+}
+
+/* Glassmorphism Effect */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Neon City Name */
+.neon-text {
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff,
+               0 0 20px #0ff,
+               0 0 30px #0ff;
+  font-size: 2.5rem;
+}
+
+.country-badge {
+  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+/* Gradient Border */
+.gradient-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #9d70ff, #ff6b6b) 1;
+}
+
+/* Animated Thermometer */
+.icon-spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Coordinates Styling */
+.coordinates {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #87ceeb;
+}
+
+.lat::before, .lon::before {
+  content: "📍";
+  margin-right: 0.5rem;
+}
+
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #D4BFFF;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(157, 112, 255, 0.3);
+  border-top: 4px solid #9D70FF;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  text-align: center;
+  padding: 2rem;
+  color: #ff6b6b;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.weather-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.current-weather {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  color: #D4BFFF;
+}
+
+.current-weather img {
+  width: 60px;
+  height: 60px;
+}

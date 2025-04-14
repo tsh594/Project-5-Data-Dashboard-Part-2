@@ -4,7 +4,7 @@ Submitted by: **Tasneem Shabana**
 
 This web app: **A responsive weather dashboard that displays current weather conditions, forecasts, and charts for cities around the world using data from OpenWeatherMap API.**
 
-Time spent: **8** hours spent in total
+Time spent: **25** hours spent in total
 
 ## Required Features
 
@@ -53,7 +53,7 @@ The following **additional** features are implemented:
   - **Verified**: The `fetchWeather` function in `App.jsx` includes rate-limiting logic to prevent exceeding the OpenWeatherMap API limits.
 - [x] Responsive design that works on mobile devices
   - **Verified**: The `index.css` file includes responsive styles for charts, cards, and the sidebar.
-- [x] Recent search history with localStorage persistence
+- [] Recent search history with localStorage persistence
   - **Verified**: The `SearchBar.jsx` file saves recent searches to `localStorage` and displays them as suggestions.
 - [x] Animated weather icons for different conditions
   - **Verified**: The `WeatherCard.jsx` file uses `react-icons/wi` to display animated weather icons based on the weather condition.
@@ -72,10 +72,12 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='videos/desktop.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='videos/Vite+React-Weather-App-Desktop.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with ...  
+(1). Game Bar
+(2). Cloud Convertor (https://cloudconvert.com/mp4-to-gif)
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
